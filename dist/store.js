@@ -6,6 +6,14 @@ class GameManager {
         this.games = [];
         this.games = [];
     }
+    static getInstance() {
+        //this will create a single instance of GameManager and return it... no matter how many times being called it will return the same instance everytime... implies the same memory right!
+        if (GameManager.instance) {
+            return GameManager.instance;
+        }
+        GameManager.instance = new GameManager();
+        return GameManager.instance;
+    }
     addMove(gameId, move) {
         console.log(`Adding move ${move} to game ${gameId}`);
         const game = this.games.find(game => game.id === gameId);
@@ -25,4 +33,5 @@ class GameManager {
     }
 }
 exports.GameManager = GameManager;
-exports.gameManager = new GameManager();
+exports.gameManager = GameManager.getInstance();
+// const gameManager1=new GameManager()                      //this is not possible as the constructor of the class is private

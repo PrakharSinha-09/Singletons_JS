@@ -7,8 +7,20 @@ interface Game{
 
 export class GameManager {
     games: Game[]=[]
-    constructor() {
+
+    private static instance: GameManager        //this static attribute is also needed and must be of the same class type
+
+    private constructor() {                    //make constructor private and write static getInstance() method and return new GameManager() for singleton pattern
         this.games=[]
+    }
+
+    static getInstance(){
+        //this will create a single instance of GameManager and return it... no matter how many times being called it will return the same instance everytime... implies the same memory right!
+        if(GameManager.instance){
+            return GameManager.instance
+        }
+        GameManager.instance=new GameManager();
+        return GameManager.instance
     }
 
     addMove(gameId: string, move: string)
@@ -33,4 +45,5 @@ export class GameManager {
     }
 }
 
-export const gameManager=new GameManager()
+export const gameManager=GameManager.getInstance()
+// const gameManager1=new GameManager()                      //this is not possible as the constructor of the class is private
